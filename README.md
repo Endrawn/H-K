@@ -1,2 +1,2 @@
-# H-tf--Kedd
+# Hétfő - Kedd
 Elekes András - feladatok
