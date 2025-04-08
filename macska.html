@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random macska nézegető</title>
+    <style>
+        body{
+            background: linear-gradient(to right, #ffecd2, #fcb69f);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        h1{
+            color: #333;
+            text-shadow: 1px 1px 2px white;
+        }
+        #catContainer{
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: inline-block;
+        }
+        button{
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            padding: 11px 25px;
+            font-size: 20px;
+            border-radius: 20px;
+            margin: 1px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover{
+            background-color: #e85a4f;
+        }
+        img{
+            margin-top: 20px;
+            border-radius: 10px;
+            max-width: 100%;
+            height: auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .arrow{
+            font-size: 30px;
+            cursor: pointer;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Macska nézegető</h1>
+    <div id="catContainer">
+        <button onclick="loadCat('https://cataas.com/cat')">🎲 Macska</button>
+        <button onclick="loadCat('https://cataas.com/cat/says/hello')">💬 Hello macska</button>
+        <button id="gifButton" onclick="loadCatGif()">🎞️ Macska GIF</button>
+        <button onclick="loadCat('https://cataas.com/cat?filter=mono')">⚫ Monokróm Cat</button>
+        <button onclick="loadCat('https://cataas.com/cat?filter=custom&brightness=30&saturation=50')">🎨 Szűrt macska</button>
+        <button onclick="loadCat('https://cataas.com/cat?filter=custom&r=255&g=0&b=0')">🔴 Piros Macska</button>
+        <button onclick="loadCat('https://cataas.com/cat?filter=custom&r=0&g=255&b=0')">🟢 Zöld Macska</button>
+        <button onclick="loadCat('https://cataas.com/cat?filter=custom&r=0&g=0&b=255')">🔵 Kék Macska</button>
+        <br><br>
+        <span class="arrow" onclick="previousCat()">⬅️</span>
+        <img id="catImage" src="" alt="Cat" width="800">
+        <span class="arrow" onclick="nextCat()">➡️</span>
+    </div>
+    <script>
+        let gifUrl = 'https://cataas.com/cat/gif';
+        let currentCatIndex = 0;
+        const catUrls = [
+            'https://cataas.com/cat',
+            'https://cataas.com/cat/says/hello',
+            'https://cataas.com/cat?filter=mono',
+            'https://cataas.com/cat?filter=custom&brightness=30&saturation=50',
+            'https://cataas.com/cat?filter=custom&r=255&g=0&b=0',
+            'https://cataas.com/cat?filter=custom&r=0&g=0&b=255'
+        ];
+        function loadCat(url){
+            const timestamp = new Date().getTime();
+            const separator = url.includes('?') ? '&' : '?';
+            document.getElementById("catImage").src = url + separator + "timestamp=" + timestamp;
+        }
+        function loadCatGif(){
+            const timestamp = new Date().getTime();
+            document.getElementById("catImage").src = gifUrl + '?timestamp=' + timestamp;
+        }
+        function previousCat(){
+            currentCatIndex = (currentCatIndex - 1 + catUrls.length) % catUrls.length;
+            loadCat(catUrls[currentCatIndex]);
+        }
+        function nextCat(){
+            currentCatIndex = (currentCatIndex + 1) % catUrls.length;
+            loadCat(catUrls[currentCatIndex]);
+        }
+        document.getElementById("gifButton").addEventListener("dblclick", loadCatGif);
+    </script>
+</body>
+</html>
